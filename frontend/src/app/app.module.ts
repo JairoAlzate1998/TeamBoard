@@ -32,6 +32,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatCardModule,
     MatInputModule,
     MatSnackBarModule,
+    MatExpansionModule,
+    MatIconModule,
   ],
   providers: [
     UserService,
@@ -72,7 +76,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
-      multi: true
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],
