@@ -30,7 +30,29 @@ export class SaveTaskComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  saveTask() {}
+  saveTask() {
+    if (!this.registerData.name || !this.registerData.description) {
+      console.log('Failed process: Incomplete data');
+      this.message = 'Failed process: Incomplete data';
+      this.openSnackBarError();
+      this.registerData = {};
+    } else {
+      this._boardService.saveTask(this.registerData).subscribe(
+        (res) => {
+          console.log(res);
+          this._router.navigate(['/listTask']);
+          this.message = 'Task created';
+          this.openSnackBarSuccesfull();
+          this.registerData = {};
+        },
+        (err) => {
+          console.log(err);
+          this.message = err.error;
+          this.openSnackBarError();
+        }
+      );
+    }
+  }
 
   openSnackBarSuccesfull() {
     this._snackBar.open(this.message, 'X', {
