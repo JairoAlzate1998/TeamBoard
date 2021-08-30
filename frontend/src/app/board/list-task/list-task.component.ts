@@ -49,6 +49,8 @@ export class ListTaskComponent implements OnInit {
       (res) => {
         console.log(res);
         task.status = status;
+        this.message = 'Task update';
+        this.openSnackBarSuccesfull();
       },
       (err) => {
         task.status = tempStatus;
@@ -58,7 +60,22 @@ export class ListTaskComponent implements OnInit {
     );
   }
 
-  deleteTask(task: any){}
+  deleteTask(task: any){
+    this._boardService.deleteTask(task).subscribe(
+      (res) => {
+        let index = this.taskData.indexOf(task);
+        if(index > -1){
+          this.taskData.splice(index, 1);
+          this.message = res.message;
+          this.openSnackBarSuccesfull();
+        }
+      },
+      (err) => {
+        this.message = err.error;
+        this.openSnackBarError();
+      }
+    );
+  }
 
   openSnackBarSuccesfull() {
     this._snackBar.open(this.message, 'X', {
