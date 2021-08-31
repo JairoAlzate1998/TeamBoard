@@ -18,6 +18,7 @@ export class SaveTaskComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   durationInSecond: number = 2;
+  selectedFile: any;
 
   constructor(
     private _boardService: BoardService,
@@ -26,6 +27,7 @@ export class SaveTaskComponent implements OnInit {
   ) {
     this.registerData = {};
     this.message = '';
+    this.selectedFile = null;
   }
 
   ngOnInit(): void {}
@@ -53,6 +55,10 @@ export class SaveTaskComponent implements OnInit {
       );
     }
   }
+
+  uploadImg(event: any) {}
+
+  saveTaskImg() {}
 
   openSnackBarSuccesfull() {
     this._snackBar.open(this.message, 'X', {
