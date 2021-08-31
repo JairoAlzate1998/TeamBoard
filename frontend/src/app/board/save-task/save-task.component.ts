@@ -56,9 +56,38 @@ export class SaveTaskComponent implements OnInit {
     }
   }
 
-  uploadImg(event: any) {}
+  uploadImg(event: any) {
+    this.selectedFile = <File>event.target.files[0];
+  }
 
-  saveTaskImg() {}
+  saveTaskImg() {
+    if (!this.registerData.name || !this.registerData.description) {
+      console.log('Failed process: Incomplete data');
+      this.message = 'Failed process: Incomplete data';
+      this.openSnackBarError();
+      this.registerData = {};
+    } else {
+      const data = new FormData();
+      data.append('image', this.selectedFile, this.selectedFile.name);
+      data.append('name', this.registerData.name);
+      data.append('description', this.registerData.description);
+
+      this._boardService.saveTaskImg(data).subscribe(
+        (res) => {
+          console.log(res);
+          this._router.navigate(['/listTask']);
+          this.message = 'Task created';
+          this.openSnackBarSuccesfull();
+          this.registerData = {};
+        },
+        (err) => {
+          console.log(err);
+          this.message = err.error;
+          this.openSnackBarError();
+        }
+      );
+    }
+  }
 
   openSnackBarSuccesfull() {
     this._snackBar.open(this.message, 'X', {
